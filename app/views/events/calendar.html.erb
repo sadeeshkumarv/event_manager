@@ -1,0 +1,27 @@
+<h1>Welcome to Event Manager</h1>
+<%= link_to 'Add Event', new_event_path %>
+<%= select_tag :users, options_for_select(['All User'] + @users.collect{ |u| [u.name, u.id] }, params[:u]), :onchange => "switchUser(this)"%>
+<%= month_calendar events: @events do |date, events| %>
+    <%= date %>
+    <br>
+    <% if params[:u] %>
+        <%= link_to events.size, '/events/?u=' + params[:u] %>
+    <% else %>
+        <%= link_to events.size, '/events/' %>
+    <% end %>
+    <% events.each do |event| %>
+      <div>
+        <%#= event.title %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <script>
+  function switchUser(ele){
+    if(ele.value == 'All User'){
+        window.location.href=window.location.pathname;
+    }  else {
+        window.location.href=window.location.pathname + '?u=' + ele.value;
+    }
+}
+</script>
